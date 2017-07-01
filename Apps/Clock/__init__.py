@@ -9,7 +9,7 @@ class Clock( baseApp.baseApp ):
         
         self.xGrid = 2
 
-    def update(self):
+    def update(self, updateCount):
         now = datetime.datetime.today()
         time = now.strftime('%H:%M')
         date = now.strftime('%-d - %b - %Y')

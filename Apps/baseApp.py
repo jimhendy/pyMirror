@@ -14,12 +14,13 @@ class baseApp( object ):
         self.xGrid = 0
         self.yGrid = 0
 
+        self.smallTextStr = "<span style='font-size:10pt; "
         self.normalTextStr = "<span style='font-size:18pt; "
         self.largeTextStr = "<span style='font-size:32pt; "
         
         pass
 
 
-    def update(self):
+    def update(self, updateCount):
         pass
         
