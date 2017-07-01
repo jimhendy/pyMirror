@@ -12,7 +12,7 @@ class baseApp( object ):
         self.label.setStyleSheet('color: white;  font-weight:bold; font-family:Times')
         self.smallTextStr = "<span style='font-size:13pt; "
         self.normalTextStr = "<span style='font-size:15pt; "
-        self.largerTextStr = "<span style='font-size:25pt; "
+        self.largerTextStr = "<span style='font-size:20pt; "
         self.largeTextStr = "<span style='font-size:32pt; "
         pass
 

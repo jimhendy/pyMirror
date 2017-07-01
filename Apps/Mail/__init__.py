@@ -8,8 +8,8 @@ class Mail( baseApp.baseApp ):
     def __init__(self, mainWindow):
         super().__init__('Mail', mainWindow)
         self.label.setAlignment(QtCore.Qt.AlignRight)
-        self.regExprFrom = re.compile('From: (.+?) <(.+?)>')
-        self.regExprSubject = re.compile('Subject\: (.+?) To\:')
+        self.regExprFrom = re.compile('\\nFrom: (.+?) <(.+?)>\\n')
+        self.regExprSubject = re.compile('\\nSubject\: (.+?)\\n')
         self.newEmailDir = '/home/jim/mail/new/'
         pass
 
@@ -24,7 +24,7 @@ class Mail( baseApp.baseApp ):
         text = self.normalTextStr + '\'>'
         
         for eF in emailFiles:
-            fileText = ''.join(open( self.newEmailDir + eF ).readlines()).replace('\n',' ')
+            fileText = ''.join(open( self.newEmailDir + eF ).readlines())
             fromMatches = self.regExprFrom.search( fileText )
             subjectMatches = self.regExprSubject.search( fileText )
             shortName = self.get_short_name( fromMatches )

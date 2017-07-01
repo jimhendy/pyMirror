@@ -20,7 +20,7 @@ class MainWindow( QtWidgets.QMainWindow ):
         self.set_black_background()
         self.timer = QtCore.QTimer(self.centralWidget)
         self.timer.timeout.connect(self.update_apps)
-        self.timer.start(200)
+        self.timer.start(1000)
         self.updateCount = 0
         self.centralWidget.setLayout(self.verticalLayout)
 
@@ -40,7 +40,10 @@ class MainWindow( QtWidgets.QMainWindow ):
         self.topHorLayout.addWidget( self.apps['Weather'].label )
         self.topHorLayout.addWidget( self.apps['Clock'].label )
         self.topHorLayout.addWidget( self.apps['Tubes'].label )
-                
+        self.topHorLayout.setAlignment( self.apps['Weather'].label, QtCore.Qt.AlignTop )
+        self.topHorLayout.setAlignment( self.apps['Clock'].label, QtCore.Qt.AlignTop )
+        self.topHorLayout.setAlignment( self.apps['Tubes'].label, QtCore.Qt.AlignTop )
+        
         self.verticalLayout.addLayout( self.topHorLayout )
         self.verticalLayout.addStretch(1)
 
