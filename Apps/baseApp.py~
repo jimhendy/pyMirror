@@ -1,0 +1,11 @@
+from PyQt5 import QtWidgets
+
+def baseApp( object ):
+
+    def __init__(self, appName, mainWindow):
+
+        self.appName = appName
+        self.mainWindow = mainWindow
+        self.label = QtWidgets.QLabel(self.mainWindow)
+        
+        

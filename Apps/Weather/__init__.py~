@@ -1,0 +1,11 @@
+from PyQt5 import QtWidgets, QtCore
+from Apps import baseApp
+
+class Clock( baseApp.baseApp ):
+    
+    def __init__(self, mainWindow):
+        super().__init__('Clock', mainWindow)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.xGrid = 2
+        self.yGrid = 0
+    
