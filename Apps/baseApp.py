@@ -8,16 +8,12 @@ class baseApp( object ):
         self.mainWindow = mainWindow
         self.label = QtWidgets.QLabel(appName, self.mainWindow)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setStyleSheet('color: white; font-variant:Small-Caps; font-weight:bold; font-family:serif')
-        
-        # "<span style='font-size:18pt; font-weight:600; color:#aa0000;'>text1</span><span style='font-size:10pt; font-weight:600; color:#00aa00;'>text2</span>"
-        self.xGrid = 0
-        self.yGrid = 0
-
-        self.smallTextStr = "<span style='font-size:10pt; "
-        self.normalTextStr = "<span style='font-size:18pt; "
+        #font-variant:Small-Caps;
+        self.label.setStyleSheet('color: white;  font-weight:bold; font-family:Times')
+        self.smallTextStr = "<span style='font-size:13pt; "
+        self.normalTextStr = "<span style='font-size:15pt; "
+        self.largerTextStr = "<span style='font-size:25pt; "
         self.largeTextStr = "<span style='font-size:32pt; "
-        
         pass
 
 

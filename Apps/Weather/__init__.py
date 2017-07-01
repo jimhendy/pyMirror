@@ -13,6 +13,7 @@ class Weather( baseApp.baseApp ):
         self.location = self.mainWindow.utils.get_location()
         self.apiKey = 'bdfb08a582089b5e61de0fe0aa19b606'
         self.owm = pyowm.OWM(self.apiKey)
+        pass
 
     def get_new_forecast(self):
         weather = self.owm.weather_around_coords(
@@ -23,7 +24,7 @@ class Weather( baseApp.baseApp ):
         return json.loads( weather.to_JSON() )
         
     def update(self, updateCount):
-
+        #return
         # Only update the weather every half hour
         if updateCount % ( 60. * 30 ) != 0:
             return
@@ -31,14 +32,14 @@ class Weather( baseApp.baseApp ):
         weather = self.get_new_forecast()
 
         # Note the weather location
-        text = self.normalTextStr + "'> "
-        text += weather['Location']['name'] + '</span><br/>'
+        text = self.largerTextStr + "'> "
+        text += weather['Location']['name'] + ' '
+        text += self.to_celcius(weather['Weather']['temperature']['temp']) + '</span><br/>'
 
         # Add icon and current temp.
-        text += self.largeTextStr + "'> "
+        text += self.normalTextStr + "'> "
         text += "<html><img src='WeatherSymbols/"
         text += weather['Weather']['weather_icon_name'] + ".png'></html>"
-        text += self.to_celcius(weather['Weather']['temperature']['temp'])
         text += "</span><br/>"
 
         # Add Max/Min temp.s
@@ -53,12 +54,11 @@ class Weather( baseApp.baseApp ):
 
         # Add rain details    
         text += self.add_rain(weather)
-
         text += '</span>'
-        
-        print(text)
-        self.label.setText( text )
 
+        self.label.setText( text )
+        pass
+    
     def add_rain(self, weather):
         symbol = '☔ '
         if 'all' in weather['Weather']['rain'].keys():
@@ -68,7 +68,8 @@ class Weather( baseApp.baseApp ):
             )
         else:
             return '%s 0%%' % symbol
-        
+        pass
+    
     def to_celcius(self, value):
         absZero = 273.15
         return '%i °C' % int(float(value) - absZero)
@@ -90,4 +91,4 @@ class Weather( baseApp.baseApp ):
             ) :
                 return arrows[i]
             minDeg += ( 2. * step )
-        
+        pass

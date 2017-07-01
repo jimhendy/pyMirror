@@ -6,8 +6,7 @@ class Clock( baseApp.baseApp ):
     
     def __init__(self, mainWindow):
         super().__init__('Clock', mainWindow)
-        
-        self.xGrid = 2
+        pass
 
     def update(self, updateCount):
         now = datetime.datetime.today()
@@ -18,5 +17,10 @@ class Clock( baseApp.baseApp ):
         text += self.normalTextStr + "'> " + date + "<br/>"
         text += day + "</span>"
         self.label.setText( text )
+        #self.recenter()
         pass
+
+    def recenter(self):
+        x = self.mainWindow.center.x() - self.label.width() * 0.5
+        self.label.move(x,0)
         
