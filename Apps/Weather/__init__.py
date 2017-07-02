@@ -55,7 +55,7 @@ class Weather( baseApp.baseApp ):
         # Add Max/Min temp.s
         text += self.smallTextStr + "'> "
         text += '▲' + self.to_celcius(weather['temperature']['max'])
-        text += ' ▼' + self.to_celcius(weather['temperature']['min'])
+        text += '  ▼' + self.to_celcius(weather['temperature']['min'])
         text += '<br/>'
 
         # Add wind details

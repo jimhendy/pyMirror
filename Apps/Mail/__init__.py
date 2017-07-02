@@ -43,10 +43,15 @@ class Mail( baseApp.baseApp ):
              }
             )
             pass
-        df = pd.DataFrame( data )
-        df.sort_values( 'Date', ascending=True )
-        for i in range(len(df)):
-            text += df.iloc[i].Name + ' - ' + df.iloc[i].Message + '<br/>'
+        if not len(data):
+            text = 'No Mail'
+        else:
+            df = pd.DataFrame( data )
+            df.sort_values( 'Date', ascending=True )
+            for i in range(len(df)):
+                text += df.iloc[i].Name + ' - ' + df.iloc[i].Message + '<br/>'
+                pass
+            text += '</span>'
             pass
         self.label.setText(text)
         pass
