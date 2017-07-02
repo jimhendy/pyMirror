@@ -14,7 +14,7 @@ class Tubes( baseApp.baseApp ):
 
     
     def update(self, updateCount):
-
+        return
         # Only update tube status every 5 minutes
         if updateCount % ( 60. * 5 ) != 0:
             return
@@ -55,7 +55,7 @@ class Tubes( baseApp.baseApp ):
             {'line':'Central', 'colour':'rgb( 220, 36, 31 )', 'shortName':'C'},
             {'line':'Metropolitan', 'colour':'rgb( 117, 16, 86 )', 'shortName':'M'},
             {'line':'Victoria', 'colour':'rgb( 0, 160, 226)', 'shortName':'V'},
-            {'line':'Waterloo', 'colour':'rgb( 118, 208, 189 )', 'shortName':'W&C'},
+            {'line':'Waterloo & City', 'colour':'rgb( 118, 208, 189 )', 'shortName':'W&C'},
             {'line':'DLR', 'colour':'rgb( 0, 175, 173 )', 'shortName':'DLR'},
             {'line':'Northern', 'colour':'rgb(255,255,255)', 'shortName':'N'}
         ]

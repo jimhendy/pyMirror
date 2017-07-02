@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
-from Apps import Weather, Clock, Tubes, Mail
+from Apps import Weather, Clock, Tubes, Sports, Mail
 from Utils import Utils
 
 class MainWindow( QtWidgets.QMainWindow ):
@@ -32,10 +32,10 @@ class MainWindow( QtWidgets.QMainWindow ):
 
     def setup_apps(self):
         self.apps = {}
+        
         self.apps['Weather'] = Weather.Weather( self )
         self.apps['Clock'] = Clock.Clock( self )
         self.apps['Tubes'] = Tubes.Tubes( self )
-
         self.topHorLayout = QtWidgets.QHBoxLayout()
         self.topHorLayout.addWidget( self.apps['Weather'].label )
         self.topHorLayout.addWidget( self.apps['Clock'].label )
@@ -47,12 +47,16 @@ class MainWindow( QtWidgets.QMainWindow ):
         self.verticalLayout.addLayout( self.topHorLayout )
         self.verticalLayout.addStretch(1)
 
+        self.apps['Sports'] = Sports.Sports( self )
         self.apps['Mail'] = Mail.Mail( self )
         self.bottomHorLayout = QtWidgets.QHBoxLayout()
+        self.bottomHorLayout.addWidget( self.apps['Sports'].label )
         self.bottomHorLayout.addStretch(1)
         self.bottomHorLayout.addWidget( self.apps['Mail'].label )
-
+        self.bottomHorLayout.setAlignment( self.apps['Sports'].label, QtCore.Qt.AlignBottom )
+        self.bottomHorLayout.setAlignment( self.apps['Mail'].label, QtCore.Qt.AlignBottom )
         self.verticalLayout.addLayout( self.bottomHorLayout )
+        pass
  
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:
