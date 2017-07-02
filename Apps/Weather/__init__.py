@@ -33,7 +33,7 @@ class Weather( baseApp.baseApp ):
         return self.to_celcius( j['Weather']['temperature']['temp'] )
     
     def update(self, updateCount):
-        return
+
         # Only update the weather every half hour
         if updateCount % ( 60. * 30 ) != 0:
             return

@@ -14,7 +14,7 @@ class Tubes( baseApp.baseApp ):
 
     
     def update(self, updateCount):
-        return
+
         # Only update tube status every 5 minutes
         if updateCount % ( 60. * 5 ) != 0:
             return
