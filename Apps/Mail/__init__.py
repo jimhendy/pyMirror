@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtCore
 from Apps import baseApp
 import os
 import re
+import pandas as pd
 
 class Mail( baseApp.baseApp ):
     
@@ -10,7 +11,8 @@ class Mail( baseApp.baseApp ):
         self.label.setAlignment(QtCore.Qt.AlignRight)
         self.regExprFrom = re.compile('\\nFrom: (.+?) <(.+?)>\\n')
         self.regExprSubject = re.compile('\\nSubject\: (.+?)\\n')
-        self.newEmailDir = '/home/jim/mail/new/'
+        self.regExprDate = re.compile('\\nDate\: (.+?)\\n')
+        self.newEmailDir = '/home/pi/mail/new/'
         pass
 
     def update(self, updateCount):
@@ -19,18 +21,32 @@ class Mail( baseApp.baseApp ):
         if updateCount % ( 60. * 3 ) != 0:
             return
 
-        os.system( '/home/jim/bin/GetMail.sh' )
+        os.system( '/home/pi/bin/GetMail.sh' )
         emailFiles = sorted(os.listdir( self.newEmailDir ))
         text = self.normalTextStr + '\'>'
-        
+
+        data = []
         for eF in emailFiles:
             fileText = ''.join(open( self.newEmailDir + eF ).readlines())
             fromMatches = self.regExprFrom.search( fileText )
-            subjectMatches = self.regExprSubject.search( fileText )
+
             shortName = self.get_short_name( fromMatches )
             if shortName is None:
-                continue            
-            text += shortName + ' - ' + subjectMatches.group(1) + '<br/>'
+                continue
+            subjectMatches = self.regExprSubject.search( fileText )
+            dateMatches = self.regExprDate.search( fileText )
+            date = pd.to_datetime( dateMatches.group(1).split('+')[0] )
+            data.append(
+                {'Name':shortName,                 
+                 'Message':subjectMatches.group(1),
+                 'Date':date
+             }
+            )
+            pass
+        df = pd.DataFrame( data )
+        df.sort_values( 'Date', ascending=True )
+        for i in range(len(df)):
+            text += df.iloc[i].Name + ' - ' + df.iloc[i].Message + '<br/>'
             pass
         self.label.setText(text)
         pass
