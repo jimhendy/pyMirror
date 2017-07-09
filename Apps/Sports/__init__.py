@@ -31,6 +31,7 @@ class Sports( baseApp.baseApp ):
         data = []
         for sportId, myTeams in self.teams.items():
             url = self.baseUrl + 'showdatestart=%s&showdateend=%s&sportid=%i' % (todayStr, nextWeekStr, sportId )
+            print(url)
             dfs = pd.read_html( url )
             if not len(dfs) == 1:
                 print('Problem getting sport data for sportId: %i' % sportId )
@@ -56,9 +57,14 @@ class Sports( baseApp.baseApp ):
                     pass
                 pass
             pass
-        df = pd.DataFrame( data )
-        df = df[['Team1','Team2','Day','Time','Channel']]
-        text =  '''<style>.padding_df td { padding: 3px; }</style>'''
-        text += df.to_html( index=False, header=False, classes="padding_df")
-        self.label.setText( text )
+        if not len(data):
+            self.label.setText( 'No Upcoming Matches' )
+            pass
+        else:
+            df = pd.DataFrame( data )
+            df = df[['Team1','Team2','Day','Time','Channel']]
+            text =  '''<style>.padding_df td { padding: 3px; }</style>'''
+            text += df.to_html( index=False, header=False, classes="padding_df")
+            self.label.setText( text )
+            pass
         pass
