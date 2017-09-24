@@ -16,7 +16,7 @@ class MainWindow( QtWidgets.QMainWindow ):
         self.centralWidget = QtWidgets.QWidget()
         self.setCentralWidget(self.centralWidget)
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralWidget)
-        self.verticalLayout.setContentsMargins( 30, 20, 50, 20 )
+        #self.verticalLayout.setContentsMargins( 30, 20, 50, 20 )
         self.setup_apps()
         self.set_black_background()
         self.timer = QtCore.QTimer(self.centralWidget)

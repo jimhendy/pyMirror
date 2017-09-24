@@ -10,11 +10,11 @@ class Sports( baseApp.baseApp ):
         super().__init__('Sports', mainWindow)
         self.baseUrl = 'http://www.wheresthematch.com/tv/home.asp?'
         self.teams = {
-            3:['Glasgow','Scotland','Munster','Ireland','British and Irish Lions'],
+            3:['Glasgow','Scotland','Munster','Ireland','British and Irish Lions','Edinburgh'],
             1:['Everton']
         }
         self.columns = ['0','Teams','1','DateTime','Competition','Channel']
-        self.regExpr = re.compile('^(.+?) v (.+?) Live Stream  (.+?) at (.+?) on (.+?)$')
+        self.regExpr = re.compile('^(.+?) v (.+?)  (.+?) at (.+?) on (.+?)$')
         
         pass
 
@@ -43,8 +43,10 @@ class Sports( baseApp.baseApp ):
             for myTeam in myTeams:
                 dfSub = df[ df.Teams.str.contains( myTeam ) ]
                 for i in range(len(dfSub)):
+                    print(dfSub.iloc[i].Teams)
                     matches = self.regExpr.search(dfSub.iloc[i].Teams)
                     if matches is None:
+                        print("Probs")
                         continue
                     data.append(
                         {'Team1':matches.group(1),
@@ -61,7 +63,7 @@ class Sports( baseApp.baseApp ):
             self.label.setText( 'No Upcoming Matches' )
             pass
         else:
-            df = pd.DataFrame( data )
+            df = pd.DataFrame( data ).drop_duplicates()
             df = df[['Team1','Team2','Day','Time','Channel']]
             text =  '''<style>.padding_df td { padding: 3px; }</style>'''
             text += df.to_html( index=False, header=False, classes="padding_df")

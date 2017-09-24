@@ -12,7 +12,7 @@ class Mail( baseApp.baseApp ):
         self.regExprFrom = re.compile('\\nFrom: (.+?) <(.+?)>\\n')
         self.regExprSubject = re.compile('\\nSubject\: (.+?)\\n')
         self.regExprDate = re.compile('\\nDate\: (.+?)\\n')
-        self.newEmailDir = '/home/pi/mail/new/'
+        self.newEmailDir = '/home/jim/mail/new/'
         pass
 
     def update(self, updateCount):
@@ -21,7 +21,7 @@ class Mail( baseApp.baseApp ):
         if updateCount % ( 60. * 3 ) != 0:
             return
 
-        os.system( '/home/pi/bin/GetMail.sh' )
+        os.system( '/home/jim/bin/GetMail.sh' )
         emailFiles = sorted(os.listdir( self.newEmailDir ))
         text = self.normalTextStr + '\'>'
 
@@ -57,16 +57,18 @@ class Mail( baseApp.baseApp ):
         pass
 
     def get_short_name( self, fromMatches ):
-
-        email = fromMatches.group(2).lower()
-        if 'jimhendy' in email:
-            return 'Jim'
-        elif 'alison' in email:
-            return 'Ali'
-        elif 'evertonfc87' in email:
-            return 'Ali'
-        else:
-            return fromMatches.group(1)
+        try:
+            email = fromMatches.group(2).lower()
+            if 'jimhendy' in email:
+                return 'Jim'
+            elif 'alison' in email:
+                return 'Ali'
+            elif 'evertonfc87' in email:
+                return 'Ali'
+            else:
+                return fromMatches.group(1)
+        except:
+            return 'None'
         
         
         
