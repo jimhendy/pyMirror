@@ -15,7 +15,7 @@ class Sports( baseApp.baseApp ):
         }
         self.columns = ['0','Teams','1','DateTime','Competition','Channel']
         self.regExpr = re.compile('^(.+?) v (.+?)  (.+?) at (.+?) on (.+?)$')
-        
+        self.dayStrings = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
         pass
 
     def update(self, updateCount):
@@ -40,14 +40,11 @@ class Sports( baseApp.baseApp ):
             df = dfs[0]
             df.columns = self.columns
             df.dropna( subset=['Channel','Teams'], inplace=True )
-            for myTeam in myTeams:
-                dfSub = df[ df.Teams.str.contains( myTeam ) ]
-                for i in range(len(dfSub)):
-                    print(dfSub.iloc[i].Teams)
-                    matches = self.regExpr.search(dfSub.iloc[i].Teams)
-                    if matches is None:
-                        print("Probs")
-                        continue
+            for i in range(len(df)):
+                matches = self.regExpr.search(df.iloc[i].Teams)
+                if matches is None:
+                    continue
+                if any(myTeam in matches.group(i) for myTeam in myTeams for i in (1,2) ):
                     data.append(
                         {'Team1':matches.group(1),
                          'Team2':matches.group(2),
@@ -65,6 +62,14 @@ class Sports( baseApp.baseApp ):
         else:
             df = pd.DataFrame( data ).drop_duplicates()
             df = df[['Team1','Team2','Day','Time','Channel']]
+            df.loc[:,'TimeInt'] = ( df.Time.str.split(":").str[0] ).astype(int)
+            for i,d in enumerate(self.dayStrings):
+                df.loc[ df.Day == d ,'DayNum'] = i
+                pass
+            df.sort_values( ['DayNum','TimeInt'], ascending=True, inplace=True )
+            del df['DayNum']
+            del df['TimeInt']
+            df.loc[ df.Channel.str.contains('televised'), 'Channel' ] = 'Not on TV'
             text =  '''<style>.padding_df td { padding: 3px; }</style>'''
             text += df.to_html( index=False, header=False, classes="padding_df")
             self.label.setText( text )
